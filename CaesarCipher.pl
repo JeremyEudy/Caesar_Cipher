@@ -6,7 +6,7 @@
 #    By: jeudy2552 <jeudy2552@floridapoly.edu>          |  \`-\   \ |  o       #
 #                                                       |---\  \   `|  l       #
 #    Created: 2018/09/07 14:21:13 by jeudy2552          | ` .\  \   |  y       #
-#    Updated: 2018/09/10 22:59:37 by jeudy2552          -------------          #
+#    Updated: 2018/09/10 23:36:12 by jeudy2552          -------------          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ use strict;
 use 5.010;
 use List::MoreUtils qw(first_index);
 
+system('clear');
 my @alpha = ('A' .. 'Z');
 START:
 print "Would you like to encode or decode?\n1 - Encode\n2 - Decode\n>";
