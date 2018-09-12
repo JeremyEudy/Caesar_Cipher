@@ -6,7 +6,7 @@
 #    By: jeudy2552 <jeudy2552@floridapoly.edu>          |  \`-\   \ |  o       #
 #                                                       |---\  \   `|  l       #
 #    Created: 2018/09/07 14:21:13 by jeudy2552          | ` .\  \   |  y       #
-#    Updated: 2018/09/10 23:36:12 by jeudy2552          -------------          #
+#    Updated: 2018/09/12 14:39:23 by jeudy2552          -------------          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ print "Would you like to encode or decode?\n1 - Encode\n2 - Decode\n>";
 my $userInput = <>;
 
 if($userInput == 1){
-SHIFT:
+ENCRYPT:
     print "File import or user input?\n1 - User Input\n2 - File Import\n>";
     my $inputChoice = <>;
     system('clear');
@@ -35,7 +35,7 @@ SHIFT:
     my ( $shift )= grep { $alpha[$_] =~ /$shiftLetter/ } 0..$#alpha;
     if($shift == -1){
         print "Please input a valid choice.\n";
-        goto SHIFT;
+        goto ENCRYPT;
     }
     my $plainText = "";
     if($inputChoice == 1){
@@ -58,13 +58,13 @@ SHIFT:
     }
     else{
         print "Please choose an appropriate option.\n";
-        goto SHIFT;
+        goto ENCRYPT;
     }
     $plainText = uc $plainText;
     $plainText =~ s/[^a-zA-Z]//g;
     my @cipherArray = qw();
     my @charArray = split(//, $plainText);
-    for(my $i = 0; $i<$#charArray; $i++){
+    for(my $i = 0; $i<$#charArray+1; $i++){
         my $search = $charArray[$i];
         my ( $index )= grep { $alpha[$_] =~ /$search/ } 0..$#alpha;
         my $cipherIndex = $index+$shift%26;
@@ -74,7 +74,61 @@ SHIFT:
     open(my $fileContents, ">", "cipherText.txt") or die "Couldn't open file cipherText.txt, $!\n";
     print $fileContents $cipherText;
     close $fileContents;
-    system('clear;perl CharArrayFreq.pl cipherText.txt');
+    print "Ciphertext: $cipherText\n";
+}
+
+elsif($userInput == 2){
+DECRYPT:
+    print "File import or user input?\n1 - User Input\n2 - File Import\n>";
+    my $inputChoice = <>;
+    system('clear');
+    print "What letter would you like to shift by?\n>";
+    my $shiftLetter = <>;
+    $shiftLetter = uc $shiftLetter;
+    chomp $shiftLetter;
+    my ( $shift )= grep { $alpha[$_] =~ /$shiftLetter/ } 0..$#alpha;
+    if($shift == -1){
+        print "Please input a valid choice.\n";
+        goto DECRYPT;
+    }
+    my $cipherText = "";
+    if($inputChoice == 1){
+        print "Please input plaintext: ";
+        $cipherText = <>;
+        chomp $cipherText;
+    }
+    elsif($inputChoice == 2){
+        print "Please input file name: ";
+        my $fileName = <>;
+        chomp $fileName;
+        my @lines;
+        open(my $fileContent, "<", $fileName) or die "Couldn't open file $fileName, $!\n";
+        {
+            local $/;
+            @lines = <$fileContent>;
+        }
+        close($fileContent);
+        $cipherText = "@lines";
+    }
+    else{
+        print "Please choose an appropriate option.\n";
+        goto DECRYPT;
+    }
+    $cipherText = uc $cipherText;
+    $cipherText =~ s/[^a-zA-Z]//g;
+    my @plainArray = qw();
+    my @charArray = split(//, $cipherText);
+    for(my $i = 0; $i<$#charArray+1; $i++){
+        my $search = $charArray[$i];
+        my ( $index )= grep { $alpha[$_] =~ /$search/ } 0..$#alpha;
+        my $plainIndex = $index-$shift%26;
+        push @plainArray, $alpha[$plainIndex];
+    }
+    my $plainText = join('', @plainArray);
+    open(my $fileContents, ">", "plainText.txt") or die "Couldn't open file plainText.txt, $!\n";
+    print $fileContents $plainText;
+    close $fileContents;
+    print "Plaintext: $plainText\n";
 }
 
 else{
