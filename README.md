@@ -11,9 +11,10 @@ Or replace ~/Caesar_Cipher/ with a different valid location.
 
 ## Install Dependencies
 
-This project utilizes the List::MoreUtils library
+This project utilizes the List::MoreUtils, and the List::UtilsBy libraries.
 ```
 cpan List::MoreUtils
+cpan List::UtilsBy
 ```
 
 ## Usage
