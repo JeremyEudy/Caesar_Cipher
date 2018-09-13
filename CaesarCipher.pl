@@ -6,7 +6,7 @@
 #    By: jeudy2552 <jeudy2552@floridapoly.edu>          |  \`-\   \ |  o       #
 #                                                       |---\  \   `|  l       #
 #    Created: 2018/09/07 14:21:13 by jeudy2552          | ` .\  \   |  y       #
-#    Updated: 2018/09/12 14:39:23 by jeudy2552          -------------          #
+#    Updated: 2018/09/13 08:59:27 by jeudy2552          -------------          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,9 @@ ENCRYPT:
     open(my $fileContents, ">", "cipherText.txt") or die "Couldn't open file cipherText.txt, $!\n";
     print $fileContents $cipherText;
     close $fileContents;
-    print "Ciphertext: $cipherText\n";
+    if($inputChoice == 1){
+        print "Ciphertext: $cipherText\n";
+    }
 }
 
 elsif($userInput == 2){
@@ -93,7 +95,7 @@ DECRYPT:
     }
     my $cipherText = "";
     if($inputChoice == 1){
-        print "Please input plaintext: ";
+        print "Please input ciphertext: ";
         $cipherText = <>;
         chomp $cipherText;
     }
@@ -128,7 +130,9 @@ DECRYPT:
     open(my $fileContents, ">", "plainText.txt") or die "Couldn't open file plainText.txt, $!\n";
     print $fileContents $plainText;
     close $fileContents;
-    print "Plaintext: $plainText\n";
+    if($inputChoice == 1){
+        print "Plaintext: $plainText\n";
+    }
 }
 
 else{
