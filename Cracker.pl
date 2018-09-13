@@ -6,7 +6,7 @@
 #    By: jeudy2552 <jeudy2552@floridapoly.edu>          |  \`-\   \ |  o       #
 #                                                       |---\  \   `|  l       #
 #    Created: 2018/09/05 14:13:01 by jeudy2552          | ` .\  \   |  y       #
-#    Updated: 2018/09/13 09:07:59 by jeudy2552          -------------          #
+#    Updated: 2018/09/13 09:21:36 by jeudy2552          -------------          #
 #                                                                              #
 # **************************************************************************** #
 #!/usr/bin/perl -w
@@ -21,7 +21,10 @@ INPUT:
 print "Welcome to the Caesar cipher cracker.\nWould you like to import a file or input ciphertext manually?\n1 - File Import\n2 - User Input\n>";
 my $userInput = <>;
 system('clear');
+my @charArray;
+my %charHash;
 if($userInput == 1){
+    print "Please input the filename: ";
     my $fileName = <>;
     #Open file for read only
     my $content = '';
@@ -33,8 +36,8 @@ if($userInput == 1){
     close($fileContents);
     $content = uc $content;                                        #Remove case sensitivity
     $content =~ s/[^a-zA-Z]//g;                                    #Remove non alpha from str
-    my @charArray = split(//, $content);                           #Split into char array
-    my %charHash = map {                                           #Generate hash from char array and count frequency of each character
+    @charArray = split(//, $content);                           #Split into char array
+    %charHash = map {                                           #Generate hash from char array and count frequency of each character
         my $search = $_;
         $_ ne "\n" ?
             ($search => scalar grep {$_ eq $search} @charArray) :
@@ -46,8 +49,8 @@ elsif($userInput == 2){
     my $content = <>;
     $content = uc $content;                                        #Remove case sensitivity
     $content =~ s/[^a-zA-Z]//g;                                    #Remove non alpha from str
-    my @charArray = split(//, $content);                           #Split into char array
-    my %charHash = map {                                           #Generate hash from char array and count frequency of each character
+    @charArray = split(//, $content);                           #Split into char array
+    %charHash = map {                                           #Generate hash from char array and count frequency of each character
         my $search = $_;
         $_ ne "\n" ?
             ($search => scalar grep {$_ eq $search} @charArray) :
